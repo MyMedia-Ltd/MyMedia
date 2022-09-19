@@ -15,6 +15,7 @@ import { IsEmail, MaxLength, MinLength } from "class-validator";
 
 import { Post } from "./Post.model";
 import { Highlight } from "./Highlight.model";
+import { Seller } from "./Seller.model";
 
 interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>;
@@ -184,6 +185,15 @@ export class User {
   })
   public isSeller: boolean;
 
+  @Field(() => String, { nullable: true })
+  @Property({
+    ref: "Seller",
+    type: Schema.Types.ObjectId,
+  })
+  public seller?: Ref<Seller>;
+  @Field(() => Seller, { nullable: true })
+  public sellerObj?: Seller;
+
   @Field(() => String)
   @Property({
     default: "profile/noAvatar.png",
@@ -203,7 +213,7 @@ export class User {
   })
   @Field(() => String)
   @Property({
-    default: "Hello, I am new on OpenHub !",
+    default: "Hello, I am new on MyMedia !",
     type: Schema.Types.String,
   })
   public bio: string;
